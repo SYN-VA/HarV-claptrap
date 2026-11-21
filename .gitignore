@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+tests/host/test_firmware_logic.bin
+.ipynb_checkpoints/
