@@ -32,7 +32,19 @@ a question (ends with `?`), or an insult. Type `quit` to stop.
 otherwise Claptrap uses the offline canned-line brain.
 """
 
-SETUP_CODE = """import json as _json
+SETUP_CODE = r"""
+def missing_key_hint():
+    return (
+        "\n🕹️  Key undetermined — no MISTRAL_API_KEY found, so dialogue is canned."
+        "\n   For LLM-improvised lines:"
+        "\n     1. Create a key at console.mistral.ai → API Keys"
+        "\n     2. In Colab: 🔑 secrets sidebar → 'Add a new secret'"
+        "\n     3. Name = MISTRAL_API_KEY, value = your key, then TOGGLE 'Notebook access' ON"
+        "\n     4. Runtime → Restart and run all"
+        "\n   (Canned mode needs no key and works fully offline.)"
+    )
+
+import json as _json
 import random as _random
 import sys as _sys
 import types as _types
@@ -74,6 +86,9 @@ chat = ClaptrapChat(engine)
 
 mode = "🌐 LLM lines (Mistral)" if engine.llm_active else "📼 canned lines (offline brain)"
 print(f"CLAPTRAP brain loaded — dialogue mode: {mode}")
+if not api_key:
+    print(missing_key_hint())
+
 """
 
 CHAT_MD = """## Chat with Claptrap
